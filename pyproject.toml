@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tasklift"
+version = "1.0.0"
+description = "TaskLift: few-shot medical image segmentation as closed-form inverse lifting"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["torch>=2.1", "numpy>=1.24", "scipy>=1.10", "pillow>=9.0", "nibabel>=5.0",
+                "pyyaml>=6.0", "matplotlib>=3.7"]
+
+[project.optional-dependencies]
+test = ["pytest>=7.0"]
+
+[tool.setuptools.packages.find]
+include = ["tasklift*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

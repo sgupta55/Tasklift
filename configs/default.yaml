@@ -1,0 +1,43 @@
+# TaskLift default configuration (paper Sec. II-V; technical document Appendix C).
+model:
+  image_size: 256        # N
+  levels: 4              # J
+  in_channels: 4         # RGB zero-padded to 4; BraTS T1, T1c, T2, FLAIR
+  mix_channels: 4        # C'
+  init_order: 4          # predictor initialised at a*_4 = (-1, 9, 9, -1)/16
+  learn_kernels: true
+  width: 24              # stage projection width -> F = 325 + 9 = 334
+  root_width: 16         # root projection width -> F0 = 153
+  degree: 2
+  compile: true
+  lam_init: 1.0
+  fp64_cond_threshold: 1.0e8
+  class_balance_eps: 1.0e-3
+  checkpoint_gram: false # set true to trade compute for memory on small GPUs
+  gram_row_chunk: 65536
+  calib_ridge: 1.0e-2
+  calib_newton_steps: 10
+train:
+  protocol: within       # within | cross
+  dataset: isic          # within: the dataset; cross: the held-out dataset
+  data_root: data/processed
+  out_dir: runs/W_isic
+  seed: 0
+  device: auto
+  train_shots: [1, 5]
+  n_query: 8
+  distinct_groups: true
+  lr: 1.0e-3
+  lr_min: 1.0e-5
+  weight_decay: 1.0e-4
+  grad_clip: 1.0
+  episode_batch: 4
+  max_episodes: 60000
+  eta1: 1.0e-2
+  eta2: 1.0e-1
+  eta3: 1.0e-4
+  val_every: 500
+  val_episodes: 100
+  patience: 10
+  log_every: 100
+  cache_in_memory: false
